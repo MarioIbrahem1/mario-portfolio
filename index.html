@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Mario Ibrahem - Cybersecurity & Networking Instructor | Portfolio
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Mario Ibrahem - Cybersecurity & Networking Instructor, IT Graduate. Specialized in IT Technical Support, Networking, Cybersecurity, and SOC Analyst Tier 1. Trainer at NTI, MCS, and Career180 with 100+ students." />
+    <meta
+      name="keywords"
+      content="cybersecurity, networking, instructor, IT trainer, SOC analyst, CCNA, network security, Python, Java, Flutter, Mario Ibrahem, portfolio" />
+    <meta name="author" content="Mario Ibrahem" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Mario Ibrahem - Cybersecurity & Networking Instructor" />
+    <meta
+      property="og:description"
+      content="IT Graduate specialized in Cybersecurity, Networking, and SOC Analysis. Trainer at NTI, MCS, and Career180 with 100+ students." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://marioibrahem.github.io" />
+    <meta
+      property="og:image"
+      content="https://marioibrahem.github.io/profile-image.jpg" />
+    <meta property="og:site_name" content="Mario Ibrahem Portfolio" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Mario Ibrahem - Cybersecurity & Networking Instructor" />
+    <meta
+      name="twitter:description"
+      content="IT Graduate specialized in Cybersecurity, Networking, and SOC Analysis. Trainer with 100+ students." />
+    <meta
+      name="twitter:image"
+      content="https://marioibrahem.github.io/profile-image.jpg" />
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#00bfff" />
+    <meta name="msapplication-TileColor" content="#00bfff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-content">
+        <div class="loading-logo">
+          <div class="logo-text">Mario</div>
+          <div class="logo-glow"></div>
+        </div>
+        <div class="loading-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">0%</div>
+        </div>
+        <div class="loading-message" id="loadingMessage">
+          Initializing Portfolio...
+        </div>
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback script to hide loading screen -->
+    <script>
+      // Fallback: hide loading screen after 4 seconds regardless
+      setTimeout(function () {
+        var loadingScreen = document.getElementById("loadingScreen");
+        if (loadingScreen) {
+          loadingScreen.style.opacity = "0";
+          setTimeout(function () {
+            loadingScreen.style.display = "none";
+          }, 500);
+        }
+      }, 4000);
+    </script>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span class="logo-text">Mario</span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#home" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#education" class="nav-link">Education</a>
+          </li>
+          <li class="nav-item">
+            <a href="#experience" class="nav-link">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a href="#certifications" class="nav-link">Certifications</a>
+          </li>
+          <li class="nav-item">
+            <a href="#projects" class="nav-link">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a href="#blog" class="nav-link">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a href="#feedback" class="nav-link">Feedback</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <div class="nav-actions">
+          <a
+            href="https://drive.google.com/drive/folders/1q4TbP-ec7kwWpWCUvKEWE2IVHGX9o9E7?usp=sharing"
+            target="_blank"
+            class="btn btn-cv">
+            <i class="fas fa-download"></i>
+            <span>Download CV</span>
+          </a>
+        </div>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-background">
+        <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+          <div class="shape shape-3"></div>
+          <div class="shape shape-4"></div>
+        </div>
+        <div class="network-lines">
+          <div class="line line-1"></div>
+          <div class="line line-2"></div>
+          <div class="line line-3"></div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="title-line">Mario</span>
+            <span class="title-line">Ibrahem</span>
+          </h1>
+          <p class="hero-subtitle">
+            Cybersecurity & Networking Instructor | IT Graduate
+          </p>
+          <div class="hero-buttons">
+            <a href="#about" class="btn btn-primary">Discover More</a>
+            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img
+            src="assets/images/profile-photo.jpg"
+            alt="Mario Ibrahem - Cybersecurity Instructor"
+            class="profile-photo" />
+          <div class="image-glow"></div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+        <span>Scroll Down</span>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">About Me</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="about-content">
+          <div class="about-image">
+            <img
+              src="assets/images/profile-photo.jpg"
+              alt="Mario Ibrahem - Cybersecurity Instructor"
+              class="about-profile-photo" />
+            <div class="image-glow"></div>
+          </div>
+          <div class="about-text">
+            <p class="about-bio">
+              Recent IT graduate specializing in Networking and Cybersecurity.
+              Trainer at NTI, MCS, and Career180 — delivered hands-on training
+              to 100+ students aged 10–21. Passionate about secure networks,
+              teaching, and building efficient tech solutions.
+            </p>
+            <div class="contact-info">
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Cairo, Egypt</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <a href="https://wa.me/201220811483" target="_blank"
+                  >01220811483</a
+                >
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>maroibrahem18@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fab fa-linkedin"></i>
+                <a
+                  href="https://www.linkedin.com/in/mario-ibrahem"
+                  target="_blank"
+                  >LinkedIn Profile</a
+                >
+              </div>
+              <div class="contact-item">
+                <i class="fab fa-github"></i>
+                <a href="https://github.com/MarioIbrahem1" target="_blank"
+                  >GitHub Profile</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Education 🎓</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="education-card" data-aos="fade-up">
+          <div class="education-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="education-content">
+            <h3>The Egyptian E-Learning University</h3>
+            <p class="faculty">
+              Faculty of Computers and Information Technology
+            </p>
+            <div class="education-details">
+              <div class="detail-item">
+                <span class="label">Degree:</span>
+                <span class="value">Bachelor of Computer Science</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Department:</span>
+                <span class="value">Information Technology</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Graduation:</span>
+                <span class="value">2025</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">GPA:</span>
+                <span class="value">C+</span>
+              </div>
+            </div>
+            <p class="education-note">
+              Focused on IT Technical Support, Networking, Cybersecurity, and
+              SOC Analyst Tier 1.
+            </p>
+          </div>
+          <div class="education-glow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Experience 💼</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="experience-timeline">
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="experience-card">
+                <div class="experience-header">
+                  <h3>Cyber Security Trainer</h3>
+                  <div class="company-logos">
+                    <span class="logo nti">NTI</span>
+                    <span class="logo mcs">MCS</span>
+                    <span class="logo career180">Career180</span>
+                  </div>
+                </div>
+                <p class="experience-period">Jul 2025 – Present</p>
+                <ul class="experience-details">
+                  <li>
+                    Delivered awareness sessions and hands-on training on
+                    cybersecurity fundamentals
+                  </li>
+                  <li>Trained over 100 students aged 10–21</li>
+                  <li>
+                    Developed comprehensive training materials and practical
+                    exercises
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="experience-card">
+                <div class="experience-header">
+                  <h3>Technical Support Trainer & Maintenance Specialist</h3>
+                  <div class="company-logos">
+                    <span class="logo handasya">El Handasya</span>
+                  </div>
+                </div>
+                <p class="experience-period">Jul 2023 – Dec 2023</p>
+                <ul class="experience-details">
+                  <li>
+                    Handled PC and laptop repairs, hardware setup, and basic
+                    networking
+                  </li>
+                  <li>
+                    Trained over 20 participants in technical support procedures
+                  </li>
+                  <li>
+                    Maintained and troubleshooted various hardware components
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="experience-card">
+                <div class="experience-header">
+                  <h3>Vice Head of Network Team</h3>
+                  <div class="company-logos">
+                    <span class="logo ieee">IEEE</span>
+                  </div>
+                </div>
+                <p class="experience-period">Sep 2024 – Jul 2025</p>
+                <ul class="experience-details">
+                  <li>Led a team of 15 members as a network instructor</li>
+                  <li>Organized and supervised technical workshops</li>
+                  <li>Coordinated team activities and training sessions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Courses & Certifications 📜</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="certifications-grid">
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="100"">
+            <div class="cert-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Introduction to Network Security</h3>
+            <p class="cert-provider">Mahara Tech</p>
+            <p class="cert-year">2025</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="150"">
+            <div class="cert-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Cyber Security Level 1</h3>
+            <p class="cert-provider">Orange Digital Center</p>
+            <p class="cert-year">2024</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="200"">
+            <div class="cert-icon">
+              <i class="fab fa-cisco"></i>
+            </div>
+            <h3>Network Security & CyberOps</h3>
+            <p class="cert-provider">Cisco Academy & NTI</p>
+            <p class="cert-year">2024</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="250"">
+            <div class="cert-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3>CCNA v7</h3>
+            <p class="cert-provider">Cisco Academy</p>
+            <p class="cert-year">2023–2024</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="300"">
+            <div class="cert-icon">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Introduction to Cybersecurity Bootcamp</h3>
+            <p class="cert-provider">CyberTalents</p>
+            <p class="cert-year">2023</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="350"">
+            <div class="cert-icon">
+              <i class="fab fa-python"></i>
+            </div>
+            <h3>Programming Using Python</h3>
+            <p class="cert-provider">Microsoft & Ministry of Communications</p>
+            <p class="cert-year">2022</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="400"">
+            <div class="cert-icon">
+              <i class="fab fa-linux"></i>
+            </div>
+            <h3>Linux OS</h3>
+            <p class="cert-provider">Coursera</p>
+            <p class="cert-year">2024</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="450"">
+            <div class="cert-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Web Development (Full Stack)</h3>
+            <p class="cert-provider">Coursera</p>
+            <p class="cert-year">2024</p>
+          </div>
+
+          <div class="cert-card" data-aos="fade-up" data-aos-delay="100"">
+            <div class="cert-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Online Leadership Course</h3>
+            <p class="cert-provider">Aspire</p>
+            <p class="cert-year">2024</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">My Projects</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="project-header">
+              <h3 class="project-title">Road Helper App</h3>
+              <div class="project-links">
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <p class="project-description">
+              A comprehensive mobile application built with Flutter and
+              Firebase, providing real-time assistance for road emergencies and
+              navigation.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Flutter</span>
+              <span class="tech-tag">Firebase</span>
+              <span class="tech-tag">Android</span>
+              <span class="tech-tag">iOS</span>
+            </div>
+          </div>
+
+          <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-header">
+              <h3 class="project-title">Airline Reservation System</h3>
+              <div class="project-links">
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <p class="project-description">
+              A full-featured airline booking system with user management,
+              flight scheduling, and reservation tracking capabilities.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Java</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">Swing</span>
+            </div>
+          </div>
+
+          <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="project-header">
+              <h3 class="project-title">Mom I'm Here</h3>
+              <div class="project-links">
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <p class="project-description">
+              A family safety application that allows parents to track their
+              children's location and receive real-time updates.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">HTML</span>
+              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">PHP</span>
+            </div>
+          </div>
+
+          <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="project-header">
+              <h3 class="project-title">Connect 4 Game</h3>
+              <div class="project-links">
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <p class="project-description">
+              An intelligent Connect 4 game implementation with AI opponent
+              using advanced algorithms for strategic gameplay.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">AI</span>
+              <span class="tech-tag">Algorithm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Latest Posts 📝</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="blog-container" id="blogContainer">
+          <!-- Dynamic content will be loaded here -->
+          <div class="blog-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading latest posts from LinkedIn...</p>
+          </div>
+        </div>
+        <div class="blog-cta">
+          <a
+            href="https://www.linkedin.com/in/mario-ibrahem"
+            target="_blank"
+            class="btn btn-primary">
+            <i class="fab fa-linkedin"></i>
+            Follow on LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="feedback">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Student Feedback</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="feedback-container">
+          <div class="feedback-groups" id="feedbackGroups">
+            <!-- Dynamic content will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Let's Connect ⚡</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="contact-cards">
+          <a
+            href="mailto:maroibrahem18@gmail.com"
+            class="contact-card email-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="card-content">
+              <h3>Email</h3>
+              <p>maroibrahem18@gmail.com</p>
+            </div>
+            <div class="card-glow"></div>
+          </a>
+
+          <a
+            href="https://linkedin.com/in/mario-ibrahem"
+            target="_blank"
+            class="contact-card linkedin-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-icon">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="card-content">
+              <h3>LinkedIn</h3>
+              <p>linkedin.com/in/mario-ibrahem</p>
+            </div>
+            <div class="card-glow"></div>
+          </a>
+
+          <a
+            href="https://github.com/MarioIbrahem1"
+            target="_blank"
+            class="contact-card github-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-icon">
+              <i class="fab fa-github"></i>
+            </div>
+            <div class="card-content">
+              <h3>GitHub</h3>
+              <p>github.com/MarioIbrahem1</p>
+            </div>
+            <div class="card-glow"></div>
+          </a>
+
+          <a
+            href="https://wa.me/201220811483"
+            target="_blank"
+            class="contact-card phone-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="card-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="card-content">
+              <h3>Phone / WhatsApp</h3>
+              <p>01220811483</p>
+            </div>
+            <div class="card-glow"></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">Built by Mario Ibrahem © 2025</p>
+      </div>
+    </footer>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mario Ibrahem",
+        "jobTitle": "Cybersecurity & Networking Instructor",
+        "description": "IT Graduate specialized in Cybersecurity, Networking, and SOC Analysis. Trainer at NTI, MCS, and Career180 with 100+ students.",
+        "url": "https://marioibrahem.github.io",
+        "image": "https://marioibrahem.github.io/profile-image.jpg",
+        "email": "maroibrahem18@gmail.com",
+        "telephone": "+201220811483",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cairo",
+          "addressCountry": "Egypt"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "The Egyptian E-Learning University",
+          "department": "Faculty of Computers and Information Technology"
+        },
+        "knowsAbout": [
+          "Cybersecurity",
+          "Network Security",
+          "SOC Analysis",
+          "CCNA",
+          "Python Programming",
+          "Java Programming",
+          "JavaScript",
+          "HTML/CSS",
+          "Flutter",
+          "Linux",
+          "MySQL",
+          "Firebase"
+        ],
+        "hasOccupation": [
+          {
+            "@type": "Occupation",
+            "name": "Cyber Security Trainer",
+            "occupationLocation": {
+              "@type": "Place",
+              "name": "NTI, MCS, Career180"
+            }
+          },
+          {
+            "@type": "Occupation",
+            "name": "Technical Support Trainer",
+            "occupationLocation": {
+              "@type": "Place",
+              "name": "El Handasya"
+            }
+          }
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/mario-ibrahem",
+          "https://github.com/MarioIbrahem1"
+        ]
+      }
+    </script>
+
+    <!-- Scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.min.js"
+      onerror="console.warn('AOS library failed to load')"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
