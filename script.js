@@ -1118,14 +1118,6 @@ class ProfilePhotoFallback {
             // If image loads, remove the fallback class
             imageElement.classList.remove('fallback');
         });
-
-        // Wait a bit for image to load, then check
-        setTimeout(() => {
-            if (!imageElement.complete || imageElement.naturalHeight === 0) {
-                // Image not loaded yet, show gradient
-                imageElement.classList.add('fallback');
-            }
-        }, 2000);
     }
 }
 

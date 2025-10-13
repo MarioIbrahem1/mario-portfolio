@@ -375,6 +375,30 @@ body {
     animation: ambientPulse 5s ease-in-out infinite alternate !important;
 }
 
+/* Mobile: make ambient/halo static (no animation) */
+@media (max-width: 768px) {
+    .ambient-fade::before {
+        animation: none !important;
+        opacity: 0.35;
+    }
+
+    .hero-image::before {
+        animation: none !important;
+    }
+
+    .hero-image::after {
+        animation: none !important;
+    }
+
+    /* Subtle static background shapes on mobile */
+    .hero {
+        background:
+            radial-gradient(600px 300px at 20% 20%, rgba(0, 191, 255, 0.06), transparent 70%),
+            radial-gradient(500px 250px at 80% 80%, rgba(138, 43, 226, 0.06), transparent 70%),
+            var(--gradient-hero);
+    }
+}
+
 .hero-background {
     position: absolute;
     top: 0;
@@ -502,9 +526,11 @@ body {
     height: 400px;
     border-radius: 50%;
     background:
-        radial-gradient(circle at 25% 25%, rgba(0, 191, 255, 0.15) 0%, transparent 70%),
-        radial-gradient(circle at 75% 75%, rgba(111, 66, 193, 0.1) 0%, transparent 70%);
-    animation: pulse-glow 10s ease-in-out infinite;
+        radial-gradient(circle at 25% 50%, rgba(0, 191, 255, 0.16) 0%, transparent 70%),
+        radial-gradient(circle at 75% 50%, rgba(111, 66, 193, 0.12) 0%, transparent 70%);
+    background-size: 200% 100%;
+    background-position: 0% 50%, 100% 50%;
+    animation: haloSweep 10s linear infinite alternate;
     z-index: -3;
 }
 
@@ -517,8 +543,10 @@ body {
     width: 450px;
     height: 450px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 191, 255, 0.08) 0%, transparent 90%);
-    animation: pulse-glow 12s ease-in-out infinite reverse;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.10) 0%, transparent 85%);
+    background-size: 150% 150%;
+    background-position: 50% 50%;
+    animation: haloBreathe 12s ease-in-out infinite;
     z-index: -4;
 }
 
@@ -548,8 +576,7 @@ body {
 /* Fallback state when no image */
 .profile-photo.fallback {
     background:
-        linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="20" fill="white"/><path d="M20 80 Q50 60 80 80 L80 100 L20 100 Z" fill="white"/></svg>') center/60% no-repeat;
+        linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
     background-blend-mode: overlay;
 }
 
@@ -618,6 +645,36 @@ body {
     100% {
         opacity: 0.75;
     }
+}
+
+@keyframes haloSweep {
+    0% {
+        background-position: 0% 50%, 100% 50%;
+        opacity: 0.55;
+    }
+
+    100% {
+        background-position: 100% 50%, 0% 50%;
+        opacity: 0.7;
+    }
+}
+
+@keyframes haloBreathe {
+    0% {
+        opacity: 0.35;
+    }
+
+    100% {
+        opacity: 0.55;
+    }
+}
+
+.no-gpu .hero-image::before {
+    animation: haloSweep 10s linear infinite alternate !important;
+}
+
+.no-gpu .hero-image::after {
+    animation: haloBreathe 12s ease-in-out infinite !important;
 }
 
 .hero-title {
