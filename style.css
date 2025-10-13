@@ -73,6 +73,82 @@ body {
     box-shadow: var(--glow-soft);
 }
 
+/* No-GPU lightweight mode */
+.no-gpu * {
+    transition: none !important;
+    animation: none !important;
+}
+
+.no-gpu .cursor,
+.no-gpu .cursor-follower {
+    display: none !important;
+}
+
+.no-gpu .floating-shapes,
+.no-gpu .network-lines,
+.no-gpu .image-glow,
+.no-gpu .hero-image::before,
+.no-gpu .hero-image::after {
+    display: none !important;
+}
+
+.no-gpu .profile-photo,
+.no-gpu .about-profile-photo {
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.no-gpu .btn,
+.no-gpu .project-card,
+.no-gpu .contact-card,
+.no-gpu .cert-card,
+.no-gpu .education-card,
+.no-gpu .experience-card {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.no-gpu .title-line,
+.no-gpu .footer-text {
+    text-shadow: none !important;
+    animation: none !important;
+}
+
+.no-gpu .scroll-animate,
+.no-gpu .fade-up,
+.no-gpu .fade-down,
+.no-gpu .fade-left,
+.no-gpu .fade-right,
+.no-gpu .zoom-in,
+.no-gpu .slide-up {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.no-gpu .navbar {
+    backdrop-filter: none !important;
+}
+
+.no-gpu .loading-screen {
+    transition: opacity 0.2s linear !important;
+}
+
+.no-gpu .back-to-top::before {
+    display: none !important;
+}
+
+.no-gpu .group-header:hover,
+.no-gpu .cert-card:hover,
+.no-gpu .project-card:hover,
+.no-gpu .contact-card:hover,
+.no-gpu .education-card:hover,
+.no-gpu .experience-card:hover {
+    transform: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+}
+
 .cursor.hover {
     background: rgba(138, 43, 226, 0.6);
     transform: translate(-50%, -50%) scale(1.4);
@@ -2624,6 +2700,38 @@ section {
     .text.arabic-text {
         font-size: 1rem;
         line-height: 1.7;
+    }
+}
+
+/* Tablet and small desktop: show hamburger and collapse menu up to 992px */
+@media (max-width: 992px) {
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .nav-actions {
+        display: none;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--bg-secondary);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow-card);
+        padding: 1.5rem 0;
+        gap: 0.5rem;
+        z-index: 1001;
+    }
+
+    .nav-menu.active {
+        left: 0;
     }
 }
 

@@ -1,16 +1,11 @@
-// Initialize AOS (Animate On Scroll) with error handling
+// Initialize AOS (Animate On Scroll) with error handling (disabled in no-gpu mode)
 try {
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
-        });
-    } else {
-        console.warn('AOS library not loaded, animations will be handled by CSS');
+    const isNoGpu = document.documentElement.classList.contains('no-gpu') || document.body?.classList?.contains('no-gpu');
+    if (!isNoGpu && typeof AOS !== 'undefined') {
+        AOS.init({ duration: 600, once: true, offset: 80 });
     }
 } catch (error) {
-    console.warn('AOS initialization failed:', error);
+    console.warn('AOS init skipped/failed:', error);
 }
 
 // Custom Cursor
@@ -1119,16 +1114,20 @@ class ProfilePhotoFallback {
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Force lightweight mode
+    document.body.classList.add('no-gpu');
     try {
         new LoadingScreen();
-        new CustomCursor();
+        // Skip heavy effects in no-gpu mode
+        // new CustomCursor();
         new SmoothScroll();
         new MobileNav();
         new FeedbackSystem();
-        ScrollManager.init();
-        new TypingAnimation();
-        new ScrollAnimations();
-        new BlogSystem();
+        // Skip ScrollManager/typing/IO-based animations/blog scraping
+        // ScrollManager.init();
+        // new TypingAnimation();
+        // new ScrollAnimations();
+        // new BlogSystem();
         new ProfilePhotoFallback();
     } catch (error) {
         console.error('Error initializing components:', error);
@@ -1195,8 +1194,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(typeWriter, 2000);
     }
 
-    // Add particle effect to hero section
-    createParticles();
+    // Skip particles in no-gpu mode
+    if (!document.body.classList.contains('no-gpu')) {
+        createParticles();
+    }
 
     // Add contact card interactions
     addContactCardEffects();
