@@ -18,19 +18,36 @@ class CustomCursor {
     constructor() {
         this.cursor = document.querySelector('.cursor');
         this.cursorFollower = document.querySelector('.cursor-follower');
+        this.x = 0;
+        this.y = 0;
+        this.fx = 0;
+        this.fy = 0;
+        this.needsUpdate = false;
         this.init();
     }
 
     init() {
+        const update = () => {
+            if (this.needsUpdate) {
+                // Use left/top to preserve CSS centering translate(-50%, -50%)
+                this.cursor.style.left = this.x + 'px';
+                this.cursor.style.top = this.y + 'px';
+                this.fx += (this.x - this.fx) * 0.2;
+                this.fy += (this.y - this.fy) * 0.2;
+                this.cursorFollower.style.left = this.fx + 'px';
+                this.cursorFollower.style.top = this.fy + 'px';
+                this.needsUpdate = false;
+            }
+            requestAnimationFrame(update);
+        };
+
         document.addEventListener('mousemove', (e) => {
-            this.cursor.style.left = e.clientX + 'px';
-            this.cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                this.cursorFollower.style.left = e.clientX + 'px';
-                this.cursorFollower.style.top = e.clientY + 'px';
-            }, 50);
-        });
+            this.x = e.clientX;
+            this.y = e.clientY;
+            this.needsUpdate = true;
+        }, { passive: true });
+
+        requestAnimationFrame(update);
 
         // Hover effects
         const hoverElements = document.querySelectorAll('a, button, .project-card, .feedback-item, .contact-item');
@@ -344,7 +361,7 @@ class FeedbackSystem {
 
             card.innerHTML = `
                 <div class='feedback-content'>
-                    ${item.image ? `<img src="${item.image}" alt="${studentName}" class="avatar">` : ''}
+                    ${item.image ? `<img src="${item.image}" alt="${studentName}" class="avatar" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''}
                     <p class="name">${studentName}</p>
                     <p class="text ${textClass}">"${feedbackText}"</p>
                 </div>
@@ -506,47 +523,77 @@ class FeedbackSystem {
 }
 
 // Parallax Effects
-class ParallaxEffects {
-    constructor() {
-        this.init();
-    }
-
+// Unified Scroll Manager (rAF + passive) for parallax, navbar, back-to-top, progress
+const ScrollManager = {
+    initialized: false,
+    progressBar: null,
+    navbar: null,
+    backToTopBtn: null,
+    parallaxNodes: [],
+    ticking: false,
+    lastY: 0,
     init() {
-        window.addEventListener('scroll', () => {
-            this.handleScroll();
-        });
-    }
-
-    handleScroll() {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.floating-shapes .shape');
-        
-        parallaxElements.forEach((element, index) => {
-            const speed = 0.5 + (index * 0.1);
-            element.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-    }
-}
-
-// Navbar Scroll Effect
-class NavbarScroll {
-    constructor() {
+        if (this.initialized) return;
+        this.initialized = true;
         this.navbar = document.querySelector('.navbar');
-        this.init();
-    }
+        this.backToTopBtn = document.getElementById('backToTop');
+        this.parallaxNodes = Array.from(document.querySelectorAll('.floating-shapes .shape'));
 
-    init() {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
+        // Create progress bar
+        this.progressBar = document.createElement('div');
+        this.progressBar.setAttribute('id', 'scrollProgressBar');
+        this.progressBar.style.cssText = `position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#00bfff,#8a2be2);z-index:10001;transition:width 0.1s ease;box-shadow:0 0 10px rgba(0,191,255,0.5);`;
+        document.body.appendChild(this.progressBar);
+
+        const onScroll = () => {
+            this.lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            if (!this.ticking) {
+                this.ticking = true;
+                requestAnimationFrame(() => {
+                    this.handleScroll(this.lastY);
+                    this.ticking = false;
+                });
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        // Run initially
+        this.handleScroll(0);
+    },
+    handleScroll(scrollY) {
+        // Navbar appearance
+        if (this.navbar) {
+            if (scrollY > 100) {
                 this.navbar.style.background = 'rgba(13, 13, 13, 0.98)';
                 this.navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)';
             } else {
                 this.navbar.style.background = 'rgba(13, 13, 13, 0.95)';
                 this.navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
             }
-        });
+        }
+
+        // Back to top visibility
+        if (this.backToTopBtn) {
+            if (scrollY > 150) this.backToTopBtn.classList.add('visible');
+            else this.backToTopBtn.classList.remove('visible');
+        }
+
+        // Progress bar width
+        if (this.progressBar) {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+            this.progressBar.style.width = pct + '%';
+        }
+
+        // Parallax shapes
+        if (this.parallaxNodes.length) {
+            this.parallaxNodes.forEach((el, index) => {
+                const speed = 0.05 + (index * 0.02);
+                el.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
+            });
+        }
     }
-}
+};
 
 // Typing Animation for Hero Title
 class TypingAnimation {
@@ -679,10 +726,7 @@ class BackToTop {
     init() {
         if (!this.button) return;
 
-        // Show/hide button based on scroll position
-        window.addEventListener('scroll', () => {
-            this.toggleVisibility();
-        });
+        // Visibility handled by ScrollManager
 
         // Smooth scroll to top when clicked
         this.button.addEventListener('click', (e) => {
@@ -1081,11 +1125,9 @@ document.addEventListener('DOMContentLoaded', () => {
         new SmoothScroll();
         new MobileNav();
         new FeedbackSystem();
-        new ParallaxEffects();
-        new NavbarScroll();
+        ScrollManager.init();
         new TypingAnimation();
         new ScrollAnimations();
-        new BackToTop();
         new BlogSystem();
         new ProfilePhotoFallback();
     } catch (error) {
@@ -1155,9 +1197,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add particle effect to hero section
     createParticles();
-
-    // Add scroll progress indicator
-    addScrollProgress();
 
     // Add contact card interactions
     addContactCardEffects();

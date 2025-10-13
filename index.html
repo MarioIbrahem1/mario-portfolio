@@ -54,6 +54,9 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -64,6 +67,7 @@
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet" />
+    <link rel="preload" as="image" href="assets/images/profile-photo.jpg" imagesrcset="assets/images/profile-photo.jpg" />
   </head>
   <body>
     <!-- Loading Screen -->
@@ -192,8 +196,12 @@
         <div class="hero-image">
           <img
             src="assets/images/profile-photo.jpg"
+            srcset="assets/images/profile-photo.jpg 800w"
+            sizes="(max-width: 480px) 200px, (max-width: 768px) 250px, (max-width: 1200px) 300px, 350px"
             alt="Mario Ibrahem - Cybersecurity Instructor"
-            class="profile-photo" />
+            class="profile-photo"
+            decoding="async"
+            loading="eager" />
           <div class="image-glow"></div>
         </div>
       </div>
@@ -214,8 +222,12 @@
           <div class="about-image">
             <img
               src="assets/images/profile-photo.jpg"
+              srcset="assets/images/profile-photo.jpg 800w"
+              sizes="(max-width: 480px) 200px, (max-width: 768px) 250px, (max-width: 1200px) 300px, 320px"
               alt="Mario Ibrahem - Cybersecurity Instructor"
-              class="about-profile-photo" />
+              class="about-profile-photo"
+              decoding="async"
+              loading="lazy" />
             <div class="image-glow"></div>
           </div>
           <div class="about-text">
@@ -759,7 +771,8 @@
     <!-- Scripts -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.min.js"
+      defer
       onerror="console.warn('AOS library failed to load')"></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
