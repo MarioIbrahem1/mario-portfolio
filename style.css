@@ -56,6 +56,10 @@ body {
     color: var(--text-primary);
     background: var(--bg-primary);
     overflow-x: hidden;
+    cursor: auto;
+}
+
+.has-custom-cursor {
     cursor: none;
 }
 
@@ -75,21 +79,33 @@ body {
 
 /* No-GPU lightweight mode */
 .no-gpu * {
-    transition: none !important;
     animation: none !important;
 }
 
-.no-gpu .cursor,
-.no-gpu .cursor-follower {
+.no-gpu * {
+    transition-property: none !important;
+}
+
+.no-gpu .reveal {
+    transition: opacity 0.4s ease-out !important;
+}
+
+.no-gpu:not(.has-custom-cursor) .cursor,
+.no-gpu:not(.has-custom-cursor) .cursor-follower {
     display: none !important;
 }
 
 .no-gpu .floating-shapes,
-.no-gpu .network-lines,
-.no-gpu .image-glow,
-.no-gpu .hero-image::before,
-.no-gpu .hero-image::after {
+.no-gpu .network-lines {
     display: none !important;
+}
+
+.no-gpu .hero-image::before,
+.no-gpu .hero-image::after,
+.no-gpu .image-glow {
+    /* keep halos visible but without heavy transforms */
+    animation: none !important;
+    opacity: 0.5;
 }
 
 .no-gpu .profile-photo,
@@ -147,6 +163,13 @@ body {
     transform: none !important;
     filter: none !important;
     box-shadow: none !important;
+}
+
+/* Fix feedback visibility in no-gpu: ensure items are visible when expanded */
+.no-gpu .group-content.expanded .feedback-card {
+    opacity: 1 !important;
+    transform: none !important;
+    display: block !important;
 }
 
 .cursor.hover {
@@ -324,13 +347,41 @@ body {
     overflow: hidden;
 }
 
+/* Ambient section-wide overlay (opacity-only) */
+.ambient-fade::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(1200px 600px at 20% 30%, rgba(0, 191, 255, 0.08), transparent 70%),
+        radial-gradient(800px 400px at 80% 70%, rgba(138, 43, 226, 0.08), transparent 70%);
+    opacity: 0.4;
+    animation: ambientPulse 5s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+@keyframes ambientPulse {
+    0% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 0.55;
+    }
+}
+
+.no-gpu .ambient-fade::before {
+    animation: ambientPulse 5s ease-in-out infinite alternate !important;
+}
+
 .hero-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
 }
 
 .floating-shapes {
@@ -524,7 +575,8 @@ body {
         radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.4) 0%, transparent 50%),
         radial-gradient(circle at 70% 70%, rgba(111, 66, 193, 0.3) 0%, transparent 50%),
         radial-gradient(circle, rgba(0, 191, 255, 0.2) 0%, transparent 70%);
-    animation: pulse-glow 4s ease-in-out infinite;
+    /* stop transform-based pulse on halo to avoid affecting image perception */
+    /* animation: pulse-glow 4s ease-in-out infinite; */
     z-index: 1;
 }
 
@@ -540,7 +592,7 @@ body {
     background:
         radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.3) 0%, transparent 60%),
         radial-gradient(circle at 80% 80%, rgba(111, 66, 193, 0.2) 0%, transparent 60%);
-    animation: pulse-glow 6s ease-in-out infinite reverse;
+    /* animation: pulse-glow 6s ease-in-out infinite reverse; */
     z-index: -1;
 }
 
@@ -554,34 +606,17 @@ body {
     height: 380px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(0, 191, 255, 0.15) 0%, transparent 80%);
-    animation: pulse-glow 8s ease-in-out infinite;
+    /* animation: pulse-glow 8s ease-in-out infinite; */
     z-index: -2;
 }
 
 @keyframes pulse-glow {
     0% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(0.9);
-    }
-
-    25% {
-        opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1.05);
-    }
-
-    50% {
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(1.15);
-    }
-
-    75% {
-        opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0.45;
     }
 
     100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0.75;
     }
 }
 
@@ -608,6 +643,16 @@ body {
     margin-bottom: 2rem;
     font-weight: 300;
     text-shadow: var(--glow-soft);
+}
+
+/* Gentle text reveal for hero/about (opacity only) */
+.reveal-text {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+.reveal-text.visible {
+    opacity: 1;
 }
 
 .hero-buttons {
@@ -2383,6 +2428,26 @@ section {
 }
 
 /* Animations */
+/* Lightweight halo opacity animation */
+@keyframes haloFade {
+    0% {
+        opacity: 0.35;
+    }
+
+    100% {
+        opacity: 0.65;
+    }
+}
+
+.halo-fade {
+    animation: haloFade 3.5s ease-in-out infinite alternate;
+}
+
+/* Re-enable halo fade even in no-gpu (opacity-only, very light) */
+.no-gpu .halo-fade {
+    animation: haloFade 3.5s ease-in-out infinite alternate !important;
+}
+
 @keyframes float {
 
     0%,

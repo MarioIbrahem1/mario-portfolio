@@ -409,10 +409,17 @@ class FeedbackSystem {
         groupDiv.appendChild(groupHeader);
         groupDiv.appendChild(groupContent);
         
-        // Auto-expand first group
+        // Auto-expand first group (and ensure all items are visible in no-gpu)
         if (isFirst) {
             setTimeout(() => {
                 toggleDropdown();
+                if (document.body.classList.contains('no-gpu')) {
+                    groupContent.querySelectorAll('.feedback-card').forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'none';
+                        el.style.display = 'block';
+                    });
+                }
             }, 300);
         }
         
@@ -1124,20 +1131,23 @@ class ProfilePhotoFallback {
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Force lightweight mode
+    // Force lightweight mode but keep light opacity reveals
     document.body.classList.add('no-gpu');
     try {
         new LoadingScreen();
-        // Skip heavy effects in no-gpu mode
-        // new CustomCursor();
+        // Enable custom cursor only on desktop and when not reduced motion
+        const isDesktop = window.matchMedia('(pointer:fine)').matches && !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        if (isDesktop) {
+            document.body.classList.add('has-custom-cursor');
+            new CustomCursor();
+        }
         new SmoothScroll();
         new MobileNav();
         new FeedbackSystem();
-        // Skip ScrollManager/typing/IO-based animations/blog scraping
-        // ScrollManager.init();
-        // new TypingAnimation();
-        // new ScrollAnimations();
-        // new BlogSystem();
+        // Keep LinkedIn posts and Feedback as they were
+        new BlogSystem();
+        // Lightweight reveal animations
+        initReveals();
         new ProfilePhotoFallback();
     } catch (error) {
         console.error('Error initializing components:', error);
@@ -1357,3 +1367,28 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Lightweight opacity-only reveal using IntersectionObserver (no transforms)
+function initReveals() {
+    const revealEls = document.querySelectorAll('.reveal, .reveal-text');
+    if (!revealEls.length) return;
+    revealEls.forEach(el => {
+        if (!el.classList.contains('reveal-text')) {
+            el.style.opacity = '0';
+        }
+    });
+    const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                if (el.classList.contains('reveal-text')) {
+                    el.classList.add('visible');
+                } else {
+                    el.style.opacity = '1';
+                }
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => obs.observe(el));
+}
