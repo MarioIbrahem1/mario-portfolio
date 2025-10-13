@@ -728,7 +728,13 @@ class BackToTop {
     init() {
         if (!this.button) return;
 
-        // Visibility handled by ScrollManager
+        // Show/hide button based on scroll position
+        const onScroll = () => {
+            this.toggleVisibility();
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        // Initial state
+        this.toggleVisibility();
 
         // Smooth scroll to top when clicked
         this.button.addEventListener('click', (e) => {
@@ -1140,6 +1146,8 @@ document.addEventListener('DOMContentLoaded', () => {
         new BlogSystem();
         // Lightweight reveal animations
         initReveals();
+        // Back to Top button
+        new BackToTop();
         new ProfilePhotoFallback();
     } catch (error) {
         console.error('Error initializing components:', error);
