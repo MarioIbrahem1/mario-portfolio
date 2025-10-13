@@ -766,6 +766,16 @@ class LoadingScreen {
     }
 
     init() {
+        const isNoGpu = document.body.classList.contains('no-gpu');
+        if (isNoGpu) {
+            // In lightweight mode, hide loader ASAP to not block FCP
+            const ls = this.loadingScreen;
+            if (ls) {
+                ls.style.opacity = '0';
+                setTimeout(() => { ls.style.display = 'none'; }, 100);
+            }
+            return;
+        }
         this.startProgress();
         this.hideLoading();
     }
