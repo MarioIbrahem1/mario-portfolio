@@ -98,19 +98,7 @@
       </div>
     </div>
 
-    <!-- Fallback script to hide loading screen -->
-    <script>
-      // Fallback: hide loading screen after 4 seconds regardless
-      setTimeout(function () {
-        var loadingScreen = document.getElementById("loadingScreen");
-        if (loadingScreen) {
-          loadingScreen.style.opacity = "0";
-          setTimeout(function () {
-            loadingScreen.style.display = "none";
-          }, 500);
-        }
-      }, 4000);
-    </script>
+    <!-- Loading screen behavior handled in script.js -->
 
     <!-- Custom Cursor -->
     <div class="cursor"></div>

@@ -775,22 +775,24 @@ class LoadingScreen {
         this.progressText = document.getElementById('progressText');
         this.loadingMessage = document.getElementById('loadingMessage');
         this.progress = 0;
+        this.minDurationMs = 4000; // default 4s minimum
+        this.startedAt = performance.now();
+        this.hasWindowLoaded = false;
         this.init();
     }
 
     init() {
-        const isNoGpu = document.body.classList.contains('no-gpu');
-        if (isNoGpu) {
-            // In lightweight mode, hide loader ASAP to not block FCP
-            const ls = this.loadingScreen;
-            if (ls) {
-                ls.style.opacity = '0';
-                setTimeout(() => { ls.style.display = 'none'; }, 100);
-            }
-            return;
+        // Adaptive minimum duration for low-end devices or reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = navigator.connection && navigator.connection.saveData === true;
+        const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+        const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
+        const isLowEnd = prefersReducedMotion || saveData || lowCores || lowMemory;
+        if (isLowEnd) {
+            this.minDurationMs = 2000; // cut to ~2s for low-end
         }
         this.startProgress();
-        this.hideLoading();
+        this.setupHideLogic();
     }
 
     startProgress() {
@@ -804,10 +806,12 @@ class LoadingScreen {
 
         let messageIndex = 0;
         const progressInterval = setInterval(() => {
-            this.progress += Math.random() * 15;
-            
-            if (this.progress > 100) {
-                this.progress = 100;
+            // While page not fully loaded, cap progress at 95%
+            const cap = this.hasWindowLoaded ? 100 : 95;
+            const step = this.hasWindowLoaded ? 8 : 10;
+            this.progress = Math.min(cap, this.progress + Math.random() * step);
+
+            if (this.progress >= 100) {
                 clearInterval(progressInterval);
             }
 
@@ -843,39 +847,52 @@ class LoadingScreen {
         }
     }
 
-    hideLoading() {
-        // Hide loading screen when progress reaches 100% and DOM is ready
-        const checkComplete = () => {
-            if (this.progress >= 100 && document.readyState === 'complete') {
+    setupHideLogic() {
+        const tryHide = () => {
+            const elapsed = performance.now() - this.startedAt;
+            const minElapsed = elapsed >= this.minDurationMs;
+            if (!this.hasWindowLoaded || !minElapsed) return;
+            // Ensure progress hits 100% before hide
+            this.progress = 100;
+            this.updateProgress();
+            this.updateMessage('Ready!');
             setTimeout(() => {
                 if (this.loadingScreen) {
                     this.loadingScreen.style.opacity = '0';
                     setTimeout(() => {
                         this.loadingScreen.style.display = 'none';
-                        }, 800);
-                    }
-                    }, 500);
-            } else {
-                setTimeout(checkComplete, 100);
-            }
+                    }, 600);
+                }
+            }, 300);
         };
 
-        checkComplete();
+        // When all resources are finished loading
+        if (document.readyState === 'complete') {
+            this.hasWindowLoaded = true;
+        } else {
+            window.addEventListener('load', () => {
+                this.hasWindowLoaded = true;
+            });
+        }
 
-        // Fallback: hide after 4 seconds regardless
+        // Poll until both conditions are met
+        const poll = () => {
+            tryHide();
+            if (this.loadingScreen && this.loadingScreen.style.display !== 'none') {
+                requestAnimationFrame(poll);
+            }
+        };
+        requestAnimationFrame(poll);
+
+        // Safety fallback: force hide after 6s in case of third-party stalls
         setTimeout(() => {
             if (this.loadingScreen && this.loadingScreen.style.display !== 'none') {
+                this.hasWindowLoaded = true;
                 this.progress = 100;
                 this.updateProgress();
-                this.updateMessage('Ready!');
-                setTimeout(() => {
-                this.loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    this.loadingScreen.style.display = 'none';
-                    }, 500);
-                }, 500);
+                tryHide();
             }
-        }, 4000);
+        }, 6000);
     }
 }
 
@@ -1129,12 +1146,18 @@ class ProfilePhotoFallback {
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Force lightweight mode but keep light opacity reveals
-    document.body.classList.add('no-gpu');
     try {
         new LoadingScreen();
         // Enable custom cursor only on desktop and when not reduced motion
         const isDesktop = window.matchMedia('(pointer:fine)').matches && !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        // Auto lightweight mode for low-end devices to improve performance
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = navigator.connection && navigator.connection.saveData === true;
+        const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+        const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
+        if (prefersReducedMotion || saveData || lowCores || lowMemory) {
+            document.body.classList.add('no-gpu');
+        }
         if (isDesktop) {
             document.body.classList.add('has-custom-cursor');
             new CustomCursor();
