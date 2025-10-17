@@ -1270,7 +1270,7 @@ section {
 
 .logo.ieee {
     background: rgba(255, 255, 255, 0.2);
-    color: var(--text-primary);
+    color: var(--neon-cyan);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
